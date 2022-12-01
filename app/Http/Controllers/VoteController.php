@@ -79,7 +79,7 @@ class VoteController extends Controller
             return redirect()->route('accreditation')->with('status', 'Member has already voted!');
         }
 
-        if (Member::find($request->voter_id) == true) {
+        if (Member::find($request->voter_id)->fin_status == 1) {
             $this->financalmembers($data);
         } else {
            $this->nonfinancalmembers($data);
