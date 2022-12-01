@@ -6,6 +6,8 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use function PHPUnit\Framework\returnSelf;
+
 class MemberController extends Controller
 {
     /**
@@ -49,8 +51,8 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
-        return back();
+        $member = new Member();
+        return view('members.create', compact('member'));
     }
 
     /**
@@ -61,7 +63,11 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $data = $request->all();
+
+        return back()->with('status', 'Member created successfully');
+
     }
 
     /**
@@ -84,7 +90,7 @@ class MemberController extends Controller
     public function edit(Member $member)
     {
         //
-        return back();
+        return view('members.edit', compact('member'));
     }
 
     /**
@@ -96,7 +102,12 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        //
+        $data = $request->all();
+        dd($data);
+
+        Member::find($member->id)->update($data);
+
+        return redirect()->route('members.index');
     }
 
     /**

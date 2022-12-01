@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Electioncontrol;
+use App\Models\Fvote;
 use App\Models\Vote;
 use App\Models\Member;
 use App\Models\Office;
@@ -78,6 +79,31 @@ class VoteController extends Controller
             return redirect()->route('accreditation')->with('status', 'Member has already voted!');
         }
 
+        if (Member::find($request->voter_id) == true) {
+            $this->financalmembers($data);
+        } else {
+           $this->nonfinancalmembers($data);
+        }
+
+        return redirect()->route('statistics');
+    }
+
+    public function nonfinancalmembers($data)
+    {
+        foreach ($data as $key => $value) {
+            if ($key != '_token' && $key != 'voter_id') {
+
+                $vote = new Fvote();
+                $vote->member_id = $value;
+                $vote->voter_id = $data['voter_id'];
+                $vote->office_id = $key;
+                $vote->save();
+            }
+        }
+    }
+
+    public function financalmembers($data)
+    {
         foreach ($data as $key => $value) {
             if ($key != '_token' && $key != 'voter_id') {
 
@@ -88,8 +114,6 @@ class VoteController extends Controller
                 $vote->save();
             }
         }
-
-        return redirect()->route('statistics');
     }
 
     public function statistics()
