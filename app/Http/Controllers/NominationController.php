@@ -169,5 +169,9 @@ class NominationController extends Controller
     public function destroy($id)
     {
         //
+       // dd('i m here');
+        Nomination::find($id)->delete();
+
+        return redirect()->route('candidates.list');
     }
 }

@@ -36,7 +36,7 @@ Route::resource('members', MemberController::class);
 
 Route::get('/nomination/form', [NominationController::class, 'form'])->name('nomination.form');
 Route::get('/candidates/list', [NominationController::class, 'list'])->name('candidates.list');
-Route::resource('nomination', NominationController::class)->only(['index', 'store']);
+Route::resource('nomination', NominationController::class)->only(['index', 'store', 'destroy']);
 Route::resource('offices', OfficeController::class)->except(['show']);
 
 Route::get('accreditation', [VoteController::class, 'accreditation'])->name('accreditation');

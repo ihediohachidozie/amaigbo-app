@@ -38,7 +38,7 @@
                             <td class="text-center"><a href="{{asset('storage/'.$candidate->resume)}}" target="blank">view cv</a></td>
 
                             <td class="text-center">
-                                <form action="#" method="post">
+                                <form action="{{route('nomination.destroy', $candidate->id)}}" method="post">
                                     @csrf
                                     @method('delete')
 

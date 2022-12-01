@@ -26,7 +26,7 @@
                     </div>
                 @endforeach
 
-                <button class="w-100 btn btn-primary btn-lg my-4" type="submit">Vote</button>
+                <button class="w-100 btn btn-primary btn-lg my-4" type="submit">Submit Vote</button>
             </form>
         </main>
 
