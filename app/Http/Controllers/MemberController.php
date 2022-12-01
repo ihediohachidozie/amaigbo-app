@@ -26,8 +26,8 @@ class MemberController extends Controller
      * Confirm membership function
      */
 
-     public function checkmember(Request $request)
-     {
+    public function checkmember(Request $request)
+    {
 
         # code...
         request()->validate([
@@ -36,14 +36,11 @@ class MemberController extends Controller
 
         $member = Member::whereRegno($request->regno)->first();
 
-        if($member != null)
-        {
-           return Redirect::route('nomination.form', ['id' => $member->id]);
+        if ($member != null) {
+            return Redirect::route('nomination.form', ['id' => $member->id]);
         }
         return back()->with('status', 'Invalid Membership ID');
-
-
-     }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -63,11 +60,18 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate([
+            'name' => 'required',
+            'fin_status' => 'required'
+        ]);
 
         $data = $request->all();
+        $data['pin'] = random_int(1000, 9999);
+        $data['regno'] = random_int(10000, 99999);
+        //dd($data);
+        Member::create($data);
 
-        return back()->with('status', 'Member created successfully');
-
+        return back()->with('status', 'Member successfully created');
     }
 
     /**
@@ -102,12 +106,17 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        $data = $request->all();
-        dd($data);
+        $data = request()->validate([
+            'name' => 'required',
+            'fin_status' => 'required'
+        ]);
 
-        Member::find($member->id)->update($data);
+        Member::find($member->id)->update([
+            'name' => $data['name'],
+            'fin_status' => $data['fin_status']
+        ]);
 
-        return redirect()->route('members.index');
+        return back()->with('status', 'Member successfully updated');
     }
 
     /**
@@ -119,6 +128,8 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         //
-        return back();
+        $member->delete();
+
+        return redirect()->route('members.index');
     }
 }

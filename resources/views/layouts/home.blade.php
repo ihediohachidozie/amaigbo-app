@@ -81,10 +81,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Candidates
                         </a>
-                        {{-- <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('offices.index')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Nominees
-                        </a> --}}
+                            Offices
+                        </a>
                         <a class="nav-link" href="{{ route('electionresults') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Election Results

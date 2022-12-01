@@ -9,6 +9,8 @@ class Office extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function nomination()
     {
         return $this->hasOne(Nomination::class);

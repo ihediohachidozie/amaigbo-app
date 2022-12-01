@@ -21,4 +21,6 @@ class Member extends Model
         return $this->hasMany(Vote::class);
     }
 
+
+
 }

@@ -124,7 +124,7 @@
                     <tr class="text-center">
                         <th>S/N</th>
                         <th>Name</th>
-                        <th class="text-center">Membership ID</th>
+                        <th class="text-center">Voter's ID</th>
 
                         <th class="text-center">VEN</th>
 
@@ -136,7 +136,7 @@
                     <tr>
                         <th>S/N</th>
                         <th>Name</th>
-                        <th>Membership ID</th>
+                        <th>Voter's ID</th>
 
                         <th>VEN</th>
 

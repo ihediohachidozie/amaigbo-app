@@ -16,8 +16,8 @@
                     <tr class="text-center">
                         <th>S/N</th>
                         <th>Name</th>
-                        <th class="text-center">Membership ID</th>
-
+                        <th class="text-center">Fin. Status</th>
+                        <th class="text-center">Voter's ID</th>
                         <th class="text-center">VEN</th>
 
                         <th class="text-center">Accredited</th>
@@ -28,8 +28,8 @@
                     <tr>
                         <th>S/N</th>
                         <th>Name</th>
-                        <th>Membership ID</th>
-
+                        <th>Fin. Status</th>
+                        <th>Voter's ID</th>
                         <th>VEN</th>
 
                         <th>Accredited</th>
@@ -41,6 +41,7 @@
                     <tr>
                         <td>{{$member->id}}</td>
                         <td>{{$member->name}}</td>
+                        <td class="text-center">{{$member->fin_status == 0 ? 'Not Cleared' : 'Cleared'}}</td>
                         <td class="text-center">{{$member->regno}}</td>
 
 

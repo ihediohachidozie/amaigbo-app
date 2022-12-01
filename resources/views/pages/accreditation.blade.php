@@ -24,7 +24,7 @@
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="regno" name="regno"
                                     placeholder="Enter Membership ID">
-                                <label for="regno">Enter Membership ID</label>
+                                <label for="regno">Enter Voter's ID</label>
                             </div>
 
                             @error('regno')

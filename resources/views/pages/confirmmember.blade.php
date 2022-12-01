@@ -13,7 +13,7 @@
         <main>
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
                 <h1 class="display-4 fw-normal">Membership Confirmation</h1>
-                <p class="fs-5 text-muted">Kindly confirm your membership ID before uploading your nomination form and
+                <p class="fs-5 text-muted">Kindly confirm your voter's ID before uploading your nomination form and
                     credentials.</p>
             </div>
             <div class="row row-cols-1 mb-3 text-center">
@@ -23,10 +23,10 @@
                     <div class="mb-3">
 
                         <input type="text" class="form-control" id="regno" name="regno"
-                            placeholder="Enter Membership ID">
+                            placeholder="Enter Voter's ID">
                     </div>
                     @error('regno')
-                        <div class="alert alert-danger">{{ 'Membership ID is required' }}</div>
+                        <div class="alert alert-danger">{{ 'Voter\'s ID is required' }}</div>
                     @enderror
                     @if (session('status'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
