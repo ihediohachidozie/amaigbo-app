@@ -35,11 +35,17 @@ class MemberController extends Controller
         ]);
 
         $member = Member::whereRegno($request->regno)->first();
-
+        $finStatus = Member::whereRegno($request->regno)->where('fin_status', '>', 0)->first();
         if ($member != null) {
-            return Redirect::route('nomination.form', ['id' => $member->id]);
+            if ($finStatus != null) {
+                return Redirect::route('nomination.form', ['id' => $member->id]);
+                # code...
+            } else {
+                return back()->with('status', 'Your financial status is not up to date');
+            }
+        } else {
+            return back()->with('status', 'Invalid Voter\'s ID');
         }
-        return back()->with('status', 'Invalid Membership ID');
     }
     /**
      * Show the form for creating a new resource.
