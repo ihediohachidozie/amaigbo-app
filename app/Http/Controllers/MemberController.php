@@ -41,7 +41,7 @@ class MemberController extends Controller
                 return Redirect::route('nomination.form', ['id' => $member->id]);
                 # code...
             } else {
-                return back()->with('status', 'Your financial status is not up to date');
+                return back()->with('status', 'Dear '.$member->name.', kindly update your financial status with the committee');
             }
         } else {
             return back()->with('status', 'Invalid Voter\'s ID');
