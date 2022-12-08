@@ -16,7 +16,7 @@
             labels: ["Non Accredited", "Accredited"],
             datasets: [{
                 data: [nonaccreditated, accreditated],
-                backgroundColor: ['#007bff', '#dc3545'],
+                backgroundColor: ['#ff4d4d','#00008c'],
             }],
         },
     });

@@ -12,7 +12,7 @@
                     <input class="form-check-input" type="radio"
                         name="{{ str_replace(' ', '', $candidate->office_id) }}"
                         id="{{ str_replace(' ', '', $candidate->office_id) }}"
-                        value="{{ $candidate->member->id }}">
+                        value="{{ $candidate->id }}">
                     <label class="form-check-label" for="{{ $candidate->office->name }}">
                         {{ $candidate->member->name }}
                     </label>

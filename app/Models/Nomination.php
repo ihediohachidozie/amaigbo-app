@@ -20,4 +20,12 @@ class Nomination extends Model
     {
         return $this->belongsTo(Office::class);
     }
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+    public function fvotes()
+    {
+        return $this->hasMany(Fvote::class);
+    }
 }

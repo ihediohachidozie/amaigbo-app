@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('fvotes', function (Blueprint $table) {
             $table->id();
-            $table->integer('member_id');
+            $table->integer('nomination_id');
             $table->integer('voter_id');
             $table->integer('office_id')->nullable();
             $table->timestamps();

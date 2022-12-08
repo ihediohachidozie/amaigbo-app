@@ -24,15 +24,15 @@
                     <div class="card-body">
                         <div class="row">
                             @foreach ($candidates as $candidate)
-                                @if ($office->id == $candidate->nomination->office->id)
-                                    <div class="col-md-4">
+                                {{--  @include('pages.resultcard') --}}
+                                @if ($office->id == $candidate->office_id)
+                                    <div class="col-md-4 mb-3">
                                         <div class="card" style="width: 18rem;">
-                                            <img src="{{ asset('storage/' . $candidate->nomination->image) }}"
+                                            <img src="{{ asset('storage/' . $candidate->image) }}"
                                                 class="card-img-top" alt="...">
                                             <div class="card-body text-center">
-                                                <p class="card-text text-capitalize">{{ $candidate->name }}</p>
-                                                <p>Vote(s): <span
-                                                        class="text-primary">{{ $candidate->votes_count }}</span></p>
+                                                <p class="card-text text-capitalize">{{ ucwords($candidate->member->name) }}</p>
+                                                <p>Vote(s): <span class="text-primary">{{ $candidate->votes_count }}</span></p>
                                             </div>
                                         </div>
                                     </div>

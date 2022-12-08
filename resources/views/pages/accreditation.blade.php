@@ -13,7 +13,7 @@
         <main>
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
                 <h1 class="display-4 fw-normal">Accreditation & Voting</h1>
-                <p class="fs-5 text-muted">To vote members for an electorial office, enter your Membership ID and Voter's Eligibility Number (VEN) below to comfirm your eligibility.</p>
+                <p class="fs-5 text-muted">To vote members for an electorial office, enter your Voter's ID and Voter's Eligibility Number (VEN) below to comfirm your eligibility.</p>
             </div>
             <div class="row row-cols-1 mb-3 text-center">
                 <form action="{{ route('accreditate') }}" method="post" class="mb-4">
@@ -28,7 +28,7 @@
                             </div>
 
                             @error('regno')
-                                <div class="alert alert-danger">{{ 'Membership ID is required' }}</div>
+                                <div class="alert alert-danger">{{ 'Voter\'s ID is required' }}</div>
                             @enderror
                         </div>
                         <div class="col-md">

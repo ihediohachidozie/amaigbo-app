@@ -84,17 +84,17 @@ class VoteController extends Controller
         } else {
            $this->nonfinancalmembers($data);
         }
-
         return redirect()->route('statistics');
     }
 
     public function nonfinancalmembers($data)
     {
+        # NOT IN USE
         foreach ($data as $key => $value) {
             if ($key != '_token' && $key != 'voter_id') {
 
                 $vote = new Fvote();
-                $vote->member_id = $value;
+                $vote->nomination_id = $value;
                 $vote->voter_id = $data['voter_id'];
                 $vote->office_id = $key;
                 $vote->save();
@@ -104,11 +104,12 @@ class VoteController extends Controller
 
     public function financalmembers($data)
     {
+        # NOT IN USE
         foreach ($data as $key => $value) {
             if ($key != '_token' && $key != 'voter_id') {
 
                 $vote = new Vote();
-                $vote->member_id = $value;
+                $vote->nomination_id = $value;
                 $vote->voter_id = $data['voter_id'];
                 $vote->office_id = $key;
                 $vote->save();
@@ -123,28 +124,43 @@ class VoteController extends Controller
 
         $nonaccreditated = Member::where('accreditated', 0)->count();
 
-        $votes = Vote::count();
+        $votes = Vote::count(); // valid votes count
 
         $office = Office::pluck('name', 'id');
 
         $elected_offices = [];
 
-        $offices = Office::get();
 
         $members = Member::pluck('name', 'id');
 
-        $votesbyoffice = Vote::select(DB::raw('count(voter_id) as Votes'), 'office_id as Office')
+        $financialmembers = Member::where('fin_status', 1)->pluck('id'); // Financially up to date members
+
+        $nonfinancialmembers = Member::where('fin_status', 0)->pluck('id'); // Non financially up to date members
+
+        $offices = Office::get();
+
+        $votesbyoffice = Vote::whereIn('voter_id', $financialmembers)
+            ->select(DB::raw('count(voter_id) as Votes'), 'office_id as Office')
             ->groupBy('office_id')
             ->pluck('Votes', 'Office');
 
-        $vote = Vote::get()->unique('voter_id')->count();
+        $invotesbyoffice = Fvote::whereIn('voter_id', $nonfinancialmembers)
+        ->select(DB::raw('count(voter_id) as Votes'), 'office_id as Office')
+        ->groupBy('office_id')
+        ->pluck('Votes', 'Office');
 
+        $vote = Vote::whereIn('voter_id', $financialmembers)->get()->unique('voter_id')->count(); // valid vote count
+
+        # dd($vote);
+        $invalid_votes = Fvote::whereIn('voter_id', $nonfinancialmembers)->get()->unique('voter_id')->count();// invalid vote count
+        #dd($invalid_votes);
         # start of NOT IN USE ...
-        $votesbycandidates = Vote::select(DB::raw('count(voter_id) as Votes'), 'member_id as Member')
+      /*   $votesbycandidates = Vote::whereIn('voter_id', $financialmembers)
+            ->select(DB::raw('count(voter_id) as Votes'), 'member_id as Member')
             ->groupBy('member_id')
-            ->pluck('Votes', 'Member');
+            ->pluck('Votes', 'Member'); */
         # end of NOT IN USE ...
-
+        $candidates = Nomination::with('office', 'member')->withCount('votes', 'fvotes')->get();
 
         # Election result view
         $electioncontrol = Electioncontrol::find(1);
@@ -153,20 +169,31 @@ class VoteController extends Controller
 
         $selectid = Nomination::pluck('id');
         $voteofficeid = Vote::pluck('office_id');
-        $candidates = Member::select('id', 'name')->whereIn('id', $selectid)->withCount('votes')->get();
+        #$candidates = Member::select('id', 'name')->whereIn('id', $selectid)->withCount('votes')->get();
         $officex = Office::whereIn('id', $voteofficeid)->get();
 
-        return view('pages.statistics', compact('electioncontrol', 'candidates', 'officex', 'offices', 'votesbyoffice', 'accreditated', 'nonaccreditated', 'votes', 'office', 'members', 'elected_offices', 'vote', 'votesbycandidates'));
+       # dd($votesbycandidates);
+        return view('pages.statistics', compact('electioncontrol', 'candidates', 'officex', 'offices', 'votesbyoffice', 'invotesbyoffice', 'accreditated', 'nonaccreditated', 'votes', 'invalid_votes', 'office', 'members', 'elected_offices', 'vote'));
     }
+
 
     public function voteresult()
     {
         # code...
+        $financialmembers = Member::where('fin_status', 1)->pluck('id'); // Financially up to date members
         $selectid = Nomination::pluck('id');
         $voteofficeid = Vote::pluck('office_id');
-        $candidates = Member::select('id', 'name')->whereIn('id', $selectid)->withCount('votes')->get();
+        $members = Member::pluck('name', 'id');
+
+       # $candidates = Member::select('id', 'name')->whereIn('id', $selectid)->withCount('votes')->get();
+       /* $candidates = Vote::whereIn('voter_id', $financialmembers)
+       ->select(DB::raw('count(voter_id) as Votes'), 'member_id as Member')
+       ->groupBy('member_id')
+       ->pluck('Votes', 'Member'); */
+
+       $candidates = Nomination::with('office', 'member')->withCount('votes', 'fvotes')->get();
         $offices = Office::whereIn('id', $voteofficeid)->get();
 
-        return view('pages.voteresults', compact('candidates', 'offices'));
+        return view('pages.voteresults', compact('candidates', 'offices', 'members'));
     }
 }

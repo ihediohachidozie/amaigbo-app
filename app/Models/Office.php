@@ -15,4 +15,20 @@ class Office extends Model
     {
         return $this->hasOne(Nomination::class);
     }
+
+    /**
+     * Get the votes for the blog post.
+     */
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    /**
+     * Get the fvotes for the blog post.
+     */
+    public function fvotes()
+    {
+        return $this->hasMany(Fvote::class);
+    }
 }

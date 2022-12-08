@@ -8,7 +8,7 @@ $sec = '10';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="@php echo $sec; @endphp;URL='{{ route('statistics') }}'">
+    <meta http-equiv="refresh" content="<?php echo $sec; ?>;URL='{{ route('statistics') }}'">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
@@ -96,7 +96,7 @@ $sec = '10';
                 @if (App\Models\Electioncontrol::find(1)->electioncontrol == 2)
 
                     <div class="row">
-                       {{--  <div class="col-xl-4">
+                        <div class="col-xl-4">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-table me-1"></i>
@@ -128,8 +128,7 @@ $sec = '10';
                                 </div>
                             </div>
                         </div>
-                     --}}
-                        <div class="col-xl-12">
+                        <div class="col-xl-8">
 
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -143,8 +142,8 @@ $sec = '10';
                                             <tr>
                                                 <th>Candidate</th>
                                                 <th class="text-center">Office</th>
-                                                <th class="text-center">Valid Votes</th>
-                                                {{-- <th class="text-center">Invalid Votes</th> --}}
+                                                <th class="text-center">Votes</th>
+
                                             </tr>
                                             </tr>
                                         </thead>
@@ -152,17 +151,16 @@ $sec = '10';
                                         <tbody>
                                             @foreach ($officex as $office)
                                                 @foreach ($candidates as $candidate)
-                                                    {{-- @include('pages.getoffice') --}}
-                                                    @if ($office->id == $candidate->office->id)
-                                                    <tr>
-                                                        <td>{{ ucwords($candidate->member->name) }}</td>
-                                                        <td class="text-center">
-                                                            {{ ucwords($office->name) }}
-                                                        </td>
-                                                        <td class="text-center">{{ $candidate->votes_count }}</td>
-                                                       {{--  <td class="text-center">{{ $candidate->fvotes_count }}</td> --}}
-                                                    </tr>
-                                                @endif
+                                                @if ($candidate->nomination->office->id == $office->id)
+                                                {{dd($candidate->nomination->office->id)}}
+                                                        <tr>
+                                                            <td>{{ ucwords($candidate->name) }}</td>
+                                                            <td class="text-center">
+                                                                {{ ucwords($candidate->nomination->office->name) }}
+                                                            </td>
+                                                            <td class="text-center">{{ $candidate->votes_count }}</td>
+                                                        </tr>
+                                                    @endif
                                                 @endforeach
                                             @endforeach
 

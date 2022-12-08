@@ -6,18 +6,19 @@
     var ctx = document.getElementById("myBarChart");
     var accreditated = <?php echo json_encode($accreditated); ?>;
     var vote = <?php echo json_encode($vote); ?>;
-    //var votes = <?php echo json_encode($votes); ?>;
+    var invalidvotes = <?php echo json_encode($invalid_votes); ?>;
+
     var myLineChart = new Chart(ctx, {
         type: 'bar',
         data: {
           //  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          labels: ["Accredited Voters", "Actual Voters"],
+          labels: ["Accredited Voters", "Valid Votes", "Invalid Votes"],
             datasets: [{
                 label: "Vote Statistics",
-                backgroundColor: "rgba(2,117,216,1)",
-                borderColor: "rgba(2,117,216,1)",
+                backgroundColor: ['#00008c', '#006600', '#8c0000'],
+                borderColor: ['#00008c', '#006600', '#8c00000'],
                // data: [4215, 5312, 6251, 7841, 9821, 14984, 4215, 5312, 6251, 7841, 9821, 14984],
-               data: [accreditated, vote]
+               data: [accreditated,  vote, invalidvotes]
             }],
         },
         options: {
