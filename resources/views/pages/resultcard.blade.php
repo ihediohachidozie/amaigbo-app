@@ -3,7 +3,6 @@
 
 @endphp
 
-
 @if ($office->id == $memberid[0]->office_id)
 <div class="col-md-4">
     <div class="card" style="width: 18rem;">
@@ -17,3 +16,4 @@
     </div>
 </div>
 @endif
+
