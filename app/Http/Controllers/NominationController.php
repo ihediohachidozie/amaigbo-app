@@ -57,6 +57,10 @@ class NominationController extends Controller
      */
     public function create()
     {
+        $members = Member::pluck('name', 'id');
+        $offices = Office::pluck('name', 'id');
+        $candidate = new Nomination();
+        return view('candidates.create', compact('members', 'offices', 'candidate'));
     }
 
     /**
@@ -145,7 +149,11 @@ class NominationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $members = Member::pluck('name', 'id');
+        $offices = Office::pluck('name', 'id');
+        $candidate = Nomination::find($id);
+
+        return view('candidates.edit', compact('members', 'offices','candidate'));
     }
 
     /**

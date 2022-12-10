@@ -8,7 +8,7 @@
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
                 All Candidates
-
+                <a class="btn btn-primary float-end" href="{{route('nomination.create')}}">Add Candidate</a>
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -38,6 +38,7 @@
                             <td class="text-center"><a href="{{asset('storage/'.$candidate->resume)}}" target="blank">view cv</a></td>
 
                             <td class="text-center">
+                                <a href="{{route('nomination.edit', $candidate->id)}}"><i class="fa-solid fa-pen-to-square "></i></a>
                                 <form action="{{route('nomination.destroy', $candidate->id)}}" method="post">
                                     @csrf
                                     @method('delete')
